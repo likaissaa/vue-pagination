@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Vue分页组件</title>
+    <link rel="stylesheet" href="css/bootstrap2/bootstrap.css" />
+     <script type="text/javascript" src="js/vue.js" ></script>
+    <script type="text/javascript" src="js/pagination.js" ></script>
+</head>
+<body>
+    <div id="app" class="text-center" style="margin-top: 200px">
+        			<navigation :pages="pages" :current.sync="pageNo" @navpage="msgListView" :all=all></navigation>
+        		
+          	<!--<div class="pagination text-left">
+	    	 	第<input type="text" class="text-center" style="width:30px;" v-on:input="updateVal(curPage)">页/共<input type="text" class="text-center" style="width:30px;" v-model="pages" disabled>页,共100条
+	    	</div>-->
+    </div>
+  
+    <script type="text/javascript">
+        new Vue({
+            el:"#app",
+            data:{
+                pageNo:12,
+                pages:20,
+                all:100
+            },
+            methods:{
+                msgListView(curPage){
+                    //根据当前页获取数据
+                    this.pageNo = curPage;
+                    console.log("我是第"+this.pageNo)
+                    //执行pageno传参
+                }
+            }
+        })
+    </script>
+</body>
+</html>
