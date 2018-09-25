@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>Vue分页组件</title>
+		<link rel="stylesheet" href="css/bootstrap2/bootstrap.css" />
+		<script type="text/javascript" src="js/vue2.5.js"></script>
+		<script type="text/javascript" src="js/pagination2.js"></script>
+		<style>
+			.pagination> li> select {
+				float: left;
+				background-color: #FFFFFF;
+				background-image: none;
+				border: 1px solid #e5e6e7;
+				/*border-radius: 1px;*/
+				color: inherit;
+				/*padding: 6px 12px;*/
+				transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+				height: 28px;
+				margin-right: 10px;
+				font-size: 14px;
+			}
+			
+			.pagination> li> input {
+				width: 50px;
+				height: 28px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app" class="text-center" style="margin-top: 200px">
+            <table class="table table-bordered table-striped" style="margin-top: 10px; margin-bottom: 10px;">
+                <thead>
+	                <tr>
+	                    <th>序号</th>
+	                    <th>姓名</th>
+	                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(s, index) in summary.content">
+                		<td>{{index+1}}</td>
+                    <td>{{s.name}}</td>
+                </tr>
+                </tbody>
+            </table>
+			<page2 :pageable="summary" @on-page-change="onPageChange"></page2>
+		</div>
+
+		<script type="text/javascript">
+			var pageable = {
+				
+			};
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					summary: {
+						number: 0,
+						size: 10,
+						totalElements: 12,
+						totalPages: 3,
+						first: true,
+						last: true,
+						content: [{}, {}, {}, {}, {}]
+					}
+				},
+				mounted: function() {
+					this.search()
+				},
+				methods: {
+					onPageChange: function(page, size) {
+						this.search(page, size);
+					},
+					search: function(page, size) {
+						page = page || 0;
+						size = size || 5;
+						var modify = function(data) {
+							while(data.content.length < 5) {
+								data.content.push({})
+							}
+							return data
+						}
+						var data
+							if(page == 0) {
+								 data = {
+									number: 0,
+									size: 5,
+									totalElements: 12,
+									totalPages: 3,
+									first: true,
+									last: false,
+									content: [{
+										"name": "liyehui"
+									}, {
+										"name": "liyehui"
+									}, {
+										"name": "liyehui"
+									}, {
+										"name": "liyehui"
+									}, {
+										"name": "liyehui"
+									}]
+								};
+							}
+							if(page == 1) {
+								data = {
+									number: 1,
+									size: 5,
+									totalElements: 12,
+									totalPages: 3,
+									first: false,
+									last: false,
+									content: [{
+										"name": "222222222"
+									}, {
+										"name": "222222222"
+									}, {
+										"name": "222222222"
+									}, {
+										"name": "222222222"
+									}, {
+										"name": "222222222"
+									}]
+								};
+							}
+							if(page == 2) {
+								data = {
+									number: 2,
+									size: 5,
+									totalElements: 12,
+									totalPages: 3,
+									first: false,
+									last: true,
+									content: [{
+										"name": "3333333333"
+									}, {
+										"name": "3333333333"
+									}, {
+										"name": "3333333333"
+									}, {
+										"name": "3333333333"
+									}, {
+										"name": "3333333333"
+									}]
+								};
+							}
+							this.summary = modify(data)
+						}
+					}
+			})
+		</script>
+	</body>
+
+</html>
